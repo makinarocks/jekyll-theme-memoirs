@@ -6,19 +6,25 @@ categories: [open-source]
 image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
 ---
 
-[마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 시뮬레이터 상에서 실제 봇이 사용할 robot program을 생성하는 Offline Programming 문제의 자동화를 연구 개발하고 있습니다. Reinforcement Learning, Combinatorial Optimization, 각종 robotics planning 알고리즘들을 사용하여 문제를 풀고 있습니다. [지난 블로그포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서는 저희 시뮬레이터 개선 과정을 공유했습니다.
+[마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 시뮬레이터 상에서 실제 봇이 사용할 robot program을 생성하는 Offline Programming 문제의 자동화를 연구 개발하고 있습니다.
+Reinforcement Learning, Combinatorial Optimization, 각종 robotics planning 알고리즘들을 사용하여 문제를 풀고 있습니다.
+[지난 블로그포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서는 저희 시뮬레이터 개선 과정을 공유했습니다.
 
 본 블로그에서는 프로젝트를 하다가 하게 된 오픈 소스 컨트리뷰션에 대해서 다뤄보도록 하겠습니다.
 
 # 오픈 소스 컨트리뷰션이란...
 
-오픈 소스는 허가된 라이센스로 보고, 사용하고, 수정하고, 배포하기 위해 대중이 사용할 수 있는 소스 코드입니다. 오픈 소스 프로젝트의 핵심은 접근성이 뛰어난 가치 있는 오픈 소스 소프트웨어를 만드는 것이지만, 이러한 프로젝트에 기여하는 것은 컨트리뷰터에게 도움이 될 수 있습니다. 사용하는 소프트웨어를 유지 관리하는 동시에 기술적인 능력도 연마할 수 있기 때문입니다. 마키나락스에서는 근무 시간에 오픈 소스에 컨트리뷰션을 할 수 있을 뿐만 아니라 이를 권장하고 있습니다.
+오픈 소스는 허가된 라이센스로 보고, 사용하고, 수정하고, 배포하기 위해 대중이 사용할 수 있는 소스 코드입니다.
+오픈 소스 프로젝트의 핵심은 접근성이 뛰어난 가치 있는 오픈 소스 소프트웨어를 만드는 것이지만, 이러한 프로젝트에 기여하는 것은 컨트리뷰터에게 도움이 될 수 있습니다.
+사용하는 소프트웨어를 유지 관리하는 동시에 기술적인 능력도 연마할 수 있기 때문입니다.
+마키나락스에서는 근무 시간에 오픈 소스에 컨트리뷰션을 할 수 있을 뿐만 아니라 이를 권장하고 있습니다.
 
 # 컨트리뷰션 사유
 
 ## Mlagents
 
-Mlagents는 Unity 3D 게임 엔진을 기반으로 작성된 시뮬레이션을 지능형 에이전트의 학습 환경으로 사용하는 오픈 소스 프로젝트입니다. [지난 블로그포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서 저희의 Unity3D에 기반 맞춤형 환경을 보여줬습니다.
+Mlagents는 Unity 3D 게임 엔진을 기반으로 작성된 시뮬레이션을 지능형 에이전트의 학습 환경으로 사용하는 오픈 소스 프로젝트입니다.
+[지난 블로그포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서 저희의 Unity3D에 기반 맞춤형 환경을 보여줬습니다.
 
 ## Ray Rllib
 
