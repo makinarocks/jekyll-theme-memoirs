@@ -6,10 +6,10 @@ categories: [open-source]
 image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
 ---
 
-[마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 산업군에서 사용하는 Multi-Robot Arm의 경로계획(Path Planning)* 문제를 강화학습을 이용하여 풀고 있습니다.
+[마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning)* 문제를 강화학습을 이용하여 풀고 있습니다.
 **경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*
-실재 로봇이 작용하면 시간 및 안전 문제 생길 수 있기 때문에 강화학습으로 경로계획 풀기 위해 시뮬레이터가 필요합니다.
-[지난 블로그포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서는 저희 시뮬레이터 개선 과정을 공유드렸습니다.
+여러 시행착오를 거치며 학습하는 강화학습 모델의 특성 때문에, 시간, 안전, 비용의 문제가 발생할 수 있는 실제 로봇을 사용하는 대신 시뮬레이터를 이용하여 모델을 학습시키고 있습니다.
+강화학습을 작용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 라이브러리를 사용했습니다.
 
 본 포스팅에서는 오픈소스 라이브러리(RLlib)를 사용하며 발견한 문제의 원인 분석부터 컨트리뷰션을 통한 문제해결까지의 과정을 공유드리려고 합니다.
 
