@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Open Source Contributions - rllib
+title: Open Source Contributions - RLlib
 author: yuri rocha
 categories: [open-source]
 image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
