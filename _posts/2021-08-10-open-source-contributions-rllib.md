@@ -200,6 +200,13 @@ PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통�
 
 다음과 같이 담당자의 추가적인 요청을 처리한 후, 해당 [PR](https://github.com/ray-project/ray/pull/13519)은 머지되어 Ray 1.3 버전부터 포함되었습니다.
 
+<figure class="image" style="align: center;">
+<p align="center">
+  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/communication.png" alt="after PR" width="80%">
+  <figcaption style="text-align: center;">[그림4] 담당자의 요청 처리하는 과정</figcaption>
+</p>
+</figure>
+
 # 맺음말
 
 오픈 소스 프로젝트를 사용하다 보면 언제든지 문제상황에 봉착할 수 있습니다.
