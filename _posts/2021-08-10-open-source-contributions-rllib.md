@@ -2,29 +2,29 @@
 layout: post
 title: Open Source Contributions - RLlib
 author: yuri rocha
-categories: [open-source]
+categories: [open_source, reinforcement_learning]
 image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
 ---
 
 [마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning)* 문제를 강화학습을 이용하여 풀고 있습니다.
-**경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*
+(**경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*)
 여러 시행착오를 거치며 학습하는 강화학습 모델의 특성 때문에, 시간, 안전, 비용의 문제가 발생할 수 있는 실제 로봇을 사용하는 대신 시뮬레이터를 이용하여 모델을 학습시키고 있습니다.
-강화학습을 작용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 라이브러리를 사용했습니다.
+이때 강화학습에 적용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 라이브러리를 사용했습니다.
 
 본 포스팅에서는 오픈소스 라이브러리(RLlib)를 사용하며 발견한 문제의 원인 분석부터 컨트리뷰션을 통한 문제해결까지의 과정을 공유드리려고 합니다.
 
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg" alt="OLP" width="80%">
-  <figcaption style="text-align: center;">[그림1] Multi-Robot Arm 실재 환경</figcaption>
+  <figcaption style="text-align: center;">[그림1] Multi-Robot Arm 실제 환경</figcaption>
 </p>
 </figure>
 
 # 오픈소스 컨트리뷰션
 
-오픈 소스는 허가된 라이센스로 보고, 사용하고, 수정하고, 배포하기 위해 대중이 사용할 수 있는 소스 코드입니다.
-오픈 소스 프로젝트의 핵심은 접근성이 뛰어난 가치 있는 오픈 소스 소프트웨어를 만드는 것이지만, 이러한 프로젝트에 기여하는 것은 컨트리뷰터에게 도움이 될 수 있습니다.
-사용하는 소프트웨어를 유지 관리하는 동시에 기술적인 능력도 연마할 수 있을 뿐더러 오픈소스 커뮤니티에 기여할 수 있기 때문입니다.
+오픈소스 소프트웨어는 공개적으로 액세스할 수 있게 설계되어 누구나 자유롭게 확인, 수정, 배포할 수 있는 코드입니다.
+오픈소스 프로젝트의 핵심은 접근성이 뛰어난 가치 있는 오픈소스 소프트웨어를 만드는 것이지만, 이러한 프로젝트에 기여하는 것은 컨트리뷰터에게 또한 도움이 될 수 있습니다.
+오픈소스 소프트웨어를 유지, 관리하며 기술적인 능력을 연마할 수 있을 뿐 아니라, 오픈소스 커뮤니티의 발전에 기여할 수 있기 때문입니다.
 
 # 컨트리뷰션 배경
 
@@ -42,22 +42,21 @@ RLlib은 기본적으로 Unity3D의 ML-Agents 환경에 연결할 수 있는 [Wr
 
 ## 문제상황: 사용자 지정 포트에서 분산 학습 실행
 
-프로젝트의 초기 단계에서는 여러 가지 가능성을 빠른 시간 안에 검토할 필요가 있었습니다.
-이때 주어진 컴퓨팅 자원을 최대한 효율적으로 사용하기 위해 동일 서버에서 여러가지 실험을 동시에 실행할 필요가 있었습니다. 그리고 이를 위해 각 실험에는 개별적인 포트가 할당되어야 했습니다.
-ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 옵션을 제공합니다.
-그리고 이 기능은 RLlib의 Unity3D Wrapper에서도 사용할 수 있도록 구현되어 있습니다.
-그러나 Wrapper에서 이 옵션을 사용하여 포트를 지정하면 실험이 정상적으로 시작되지 않는 현상을 확인했습니다.
-분석한 RLlib 구현상의 문제점은 다음과 같았습니다.
+프로젝트의 초기 단계에서 여러 가지 가능성을 빠른 시간 안에 검토하기 위해 단일 컴퓨팅 자원에서 여러가지 실험을 동시에 실행할 필요가 있었습니다.
+이를 위해 각 실험에는 개별적인 포트가 할당되어야 했습니다.
+ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 옵션을 제공하며, 이 기능은 RLlib의 Unity3D Wrapper에서도 사용할 수 있도록 구현되어 있습니다.
+그러나 Wrapper에서 이 옵션을 사용하여 포트를 지정하면 실험이 정상적으로 시작되지 않는 문제가 발견되었습니다.
+당시 RLlib Wrapper의 문제점은 다음과 같았습니다.
 
 ```python
 
-    _BASE_PORT = 5004
+    _BASE_PORT = 5004 # 전역 변수 선언
 
     ...
 
     def __init__(self,
                  file_name: str = None,
-                 port: Optional[int] = None,
+                 port: Optional[int] = None, # 사용자 지정한 포트
                  seed: int = 0,
                  no_graphics: bool = False,
                  timeout_wait: int = 300,
@@ -65,13 +64,13 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
     ...
 
-      port_ = port or self._BASE_PORT
-      self._BASE_PORT += 1
+      port_ = port or self._BASE_PORT # 사용자가 포트를 지정한다면 전역 변수 안 씁니다
+      self._BASE_PORT += 1 # 다음 환경 위한 전역 변수 증가
       try:
           self.unity_env = UnityEnvironment(
               file_name=file_name,
               worker_id=0,
-              base_port=port_,
+              base_port=port_, # 사용자가 포트를 지정한다면 모든 환경 똑같은 포트를 받습니다
               seed=seed,
               no_graphics=no_graphics,
               timeout_wait=timeout_wait,
@@ -92,33 +91,31 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
 ## 문제 해결과정
 
-로컬환경에서 문제를 해결하는 것은 크게 어렵지 않았지만, 동일한 문제를 겪고 있을 다른 사람들을 위해 Pull Request (이하 PR)를 통해 RLlib에 기여하기로 결정했습니다.
+Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으로 (base_port + worker_id) 포트에 연결합니다. 따라서, 발견했던 문제를 해결하기 위해 기본 포트를 고정하고 대신 환경의 worker_id를 증가했습니다.
 
 ```python
-    # Default base port when connecting directly to the Editor
-    _BASE_PORT_EDITOR = 5004
-    # Default base port when connecting to a compiled environment
+    # Ml-Agents 내부적인 기본 포트를 마추기
+    _BASE_PORT_EDITOR = 5004 
     _BASE_PORT_ENVIRONMENT = 5005
-    # The worker_id for each environment instance
     _WORKER_ID = 0
 
     ...
     
     def __init__(self,
-                 file_name: str = None,
-                 port: Optional[int] = None,
+                 file_name: str = None, # 사용자 지정한 컨파일된 앱. 없으면 Unity3D 에디터에 연결
+                 port: Optional[int] = None, # 사용자 지정한 포트
                  seed: int = 0,
                  no_graphics: bool = False,
                  timeout_wait: int = 300,
                  episode_horizon: int = 1000):
 
     ...
-
+      # 사용자가 지정한 포트 -> 컨파일된 앱 -> Unity3D 에디터 우선 순위
       port_ = port or (self._BASE_PORT_ENVIRONMENT
                         if file_name else self._BASE_PORT_EDITOR)
-      # cache the worker_id and
-      # increase it for the next environment
+      # 에디터에 연결하면 동시에 한 환경만 가능합니다
       worker_id_ = Unity3DEnv._WORKER_ID if file_name else 0
+      # 포트 대신 worker_id 증가 (Ml-Agents 안에 base_port + worker_id 포트에 자동적으로 연결합니다)
       Unity3DEnv._WORKER_ID += 1
       try:
           self.unity_env = UnityEnvironment(
@@ -137,7 +134,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
   <figcaption style="text-align: center;">[그림3] 문제 해결 후 지정한 모든 환경이 정상동작</figcaption>
 </p>
 </figure>
-
+로컬환경에서 문제를 해결하는 것은 크게 어렵지 않았지만, 동일한 문제를 겪고 있을 다른 사람들을 위해 Pull Request (이하 PR)를 통해 RLlib에 기여하기로 결정했습니다.
 문제해결(Bug Fix) PR을 제출할 때는 해당 문제가 재발하지 않도록 적절한 유닛테스트를 추가하는 것이 매우 중요합니다.
 더불어 유닛테스트를 통해 다른 유지관리자(Maintainer)들이 변경 사항을 좀 더 평가하기 쉽게하는 효과를 기대할 수 있습니다.
 다음과 같이 문제 해결과 더불어 사용자가 직접 포트를 지정하는 경우에도 모든 환경들이 각각 다른 포트를 할당받는지 확인하는 유닛테스트를 추가했습니다.
