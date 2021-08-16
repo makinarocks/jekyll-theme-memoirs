@@ -9,7 +9,7 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
 [마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning)* 문제를 강화학습을 이용하여 풀고 있습니다.
 (**경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*)
 여러 시행착오를 거치며 학습하는 강화학습 모델의 특성 때문에, 시간, 안전, 비용의 문제가 발생할 수 있는 실제 로봇을 사용하는 대신 시뮬레이터를 이용하여 모델을 학습시키고 있습니다.
-이때 강화학습에 적용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 라이브러리를 사용했습니다.
+이때 강화학습에 적용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 라이브러리를 사용하게 되었습니다.
 
 본 포스팅에서는 오픈소스 라이브러리(RLlib)를 사용하며 발견한 문제의 원인 분석부터 컨트리뷰션을 통한 문제해결까지의 과정을 공유드리려고 합니다.
 
@@ -24,7 +24,7 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
 
 오픈소스 소프트웨어는 공개적으로 액세스할 수 있게 설계되어 누구나 자유롭게 확인, 수정, 배포할 수 있는 코드입니다.
 오픈소스 프로젝트의 핵심은 접근성이 뛰어난 가치 있는 오픈소스 소프트웨어를 만드는 것이지만, 이러한 프로젝트에 기여하는 것은 컨트리뷰터에게 또한 도움이 될 수 있습니다.
-오픈소스 소프트웨어를 유지, 관리하며 기술적인 능력을 연마할 수 있을 뿐 아니라, 오픈소스 커뮤니티의 발전에 기여할 수 있기 때문입니다.
+오픈소스 소프트웨어를 유지, 관리하며 기술적인 능력을 연마할 수 있을 뿐 아니라, 오픈소스 커뮤니티의 발전에도 기여할 수 있기 때문입니다.
 
 # 컨트리뷰션 배경
 
@@ -32,7 +32,7 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
 
 
 ML-Agents는 Unity3D 게임 엔진을 기반으로 작성된 시뮬레이터로서, 지능형 에이전트의 학습 환경으로 사용되는 오픈소스 프로젝트입니다.
-[지난 블로그 포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서 OLP 프로젝트를 위해 정의한 Unity3D 환경에 대해 소개해 드린 적이 있습니다.
+([지난 블로그 포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서는 OLP 프로젝트를 위해 정의한 Unity3D 환경에 대해 소개해 드린 적이 있습니다.)
 
 ## Ray RLlib
 
@@ -56,7 +56,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
     def __init__(self,
                  file_name: str = None,
-                 port: Optional[int] = None, # 사용자 지정한 포트
+                 port: Optional[int] = None, # 사용자 지정 포트.
                  seed: int = 0,
                  no_graphics: bool = False,
                  timeout_wait: int = 300,
@@ -64,13 +64,13 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
     ...
 
-      port_ = port or self._BASE_PORT # 사용자가 포트를 지정한다면 전역 변수 안 씁니다
-      self._BASE_PORT += 1 # 다음 환경 위한 전역 변수 증가
+      port_ = port or self._BASE_PORT # 사용자가 포트를 지정한다면 전역 변수를 쓰지 않습니다.
+      self._BASE_PORT += 1 # 다음 환경을 위해 전역 변수의 값을 증가시킵니다.
       try:
           self.unity_env = UnityEnvironment(
               file_name=file_name,
               worker_id=0,
-              base_port=port_, # 사용자가 포트를 지정한다면 모든 환경 똑같은 포트를 받습니다
+              base_port=port_, # 사용자가 포트를 지정한다면 모든 환경이 똑같은 포트를 할당 받습니다.
               seed=seed,
               no_graphics=no_graphics,
               timeout_wait=timeout_wait,
@@ -102,20 +102,20 @@ Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으
     ...
     
     def __init__(self,
-                 file_name: str = None, # 사용자 지정한 컨파일된 앱. 없으면 Unity3D 에디터에 연결
-                 port: Optional[int] = None, # 사용자 지정한 포트
+                 file_name: str = None, # 사용자 지정의 컴파일 된 앱. 없으면 Unity3D 에디터에 연결.
+                 port: Optional[int] = None, # 사용자 지정 포트.
                  seed: int = 0,
                  no_graphics: bool = False,
                  timeout_wait: int = 300,
                  episode_horizon: int = 1000):
 
     ...
-      # 사용자가 지정한 포트 -> 컨파일된 앱 -> Unity3D 에디터 우선 순위
+      # 우선순위: 사용자가 지정한 포트 -> 컴파일 된 앱 -> Unity3D 에디터
       port_ = port or (self._BASE_PORT_ENVIRONMENT
                         if file_name else self._BASE_PORT_EDITOR)
-      # 에디터에 연결하면 동시에 한 환경만 가능합니다
+      # 에디터에 연결하면 동시에 한 환경만 사용 가능합니다.
       worker_id_ = Unity3DEnv._WORKER_ID if file_name else 0
-      # 포트 대신 worker_id 증가 (Ml-Agents 안에 base_port + worker_id 포트에 자동적으로 연결합니다)
+      # 포트 대신 worker_id 증가 (Ml-Agents 안에 base_port + worker_id 포트에 자동적으로 연결합니다).
       Unity3DEnv._WORKER_ID += 1
       try:
           self.unity_env = UnityEnvironment(
@@ -207,7 +207,7 @@ PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통�
 # 맺음말
 
 오픈 소스 프로젝트를 사용하다 보면 언제든지 문제상황에 봉착할 수 있습니다.
-그리고 이때 누구나 이러한 문제에 대한 해결책을 제안할 수 있습니다.
+그리고 이때 누구나 문제에 대한 해결책을 제안할 수 있습니다.
 오픈 소스의 장점은 자유로운 기여를 통해 누구나 커뮤니티에 더 나은 도구를 제공할 수 있다는 것입니다.
 
 ***That is the beauty of contributing to Open-Source***
