@@ -25,7 +25,7 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_imag
 오픈소스는 공개적으로 액세스할 수 있게 설계되어 누구나 자유롭게 확인, 수정, 배포할 수 있는 코드입니다.
 오픈소스의 핵심은 접근성이 뛰어난 가치 있는 오픈소스를 만드는 것이지만, 이러한 프로젝트에 기여하는 것은 컨트리뷰터에게 또한 도움이 될 수 있습니다.
 오픈소스를 유지, 관리하며 기술적인 능력을 연마할 수 있을 뿐 아니라, 오픈소스 커뮤니티의 발전에도 기여할 수 있기 때문입니다.
-더구나, 회사 관점에서는 회사에 적용하는 오픈소스를 개선, 인원의 기술력 성장, 대외적 기술 인지도 향상, 등 다양한 장점도 있습니다.
+더구나, 회사 관점에서는 회사에 적용하는 오픈소스를 개선, 인원의 기술력 성장, 대외적 기술 인지도 향상 등 다양한 장점도 있습니다.
 
 # 컨트리뷰션 배경
 
@@ -38,13 +38,13 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_imag
 ## Ray RLlib
 
 [Ray](https://github.com/ray-project/ray)는 파이썬 기반의 분산처리 프레임워크로, 다양한 기계학습 라이브러리를 포함하고 있습니다. 그 중 RLlib은 확장 가능한 (Scalable) 분산 강화학습 환경을 간편히 구축할 수 있도록 도와주는 라이브러리입니다.
-OLP팀에서는 RLlib을 사용하여 100 개 이상의 worker(독립적인 환경)에 대한 강화학습을 수행하고 있습니다.
+OLP팀에서는 RLlib을 사용하여 100 개 이상의 worker(독립적인 환경)를 사용하여 강화학습을 수행하고 있습니다.
 RLlib은 기본적으로 Unity3D의 ML-Agents 환경에 연결할 수 있는 [Wrapper](https://medium.com/distributed-computing-with-ray/reinforcement-learning-with-rllib-in-the-unity-game-engine-1a98080a7c0d)을 제공합니다. 이 Wrapper를 사용하면 Unity3D 환경에 RLlib의 분산 강화학습 알고리즘을 손쉽게 적용할 수 있습니다.
 
 ## 문제상황: 사용자 지정 포트에서 분산 학습 실행
 
 프로젝트의 초기 단계에서 여러 가지 가능성을 빠른 시간 안에 검토하기 위해 단일 컴퓨팅 자원에서 여러가지 실험을 동시에 실행할 필요가 있었습니다.
-이를 위해 각 실험에는 개별적인 포트가 할당되어야 했습니다.
+그리고 이를 위해서는 각 실험에는 개별적인 포트가 할당되어야 했습니다.
 ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 옵션을 제공하며, 이 기능은 RLlib의 Unity3D Wrapper에서도 사용할 수 있도록 구현되어 있습니다.
 그러나 Wrapper에서 이 옵션을 사용하여 포트를 지정하면 실험이 정상적으로 시작되지 않는 문제가 발견되었습니다.
 당시 RLlib Wrapper의 문제점은 다음과 같았습니다.
@@ -92,7 +92,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
 ## 문제 해결과정
 
-Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으로 (base_port + worker_id) 포트에 연결합니다. 따라서, 발견했던 문제를 해결하기 위해 기본 포트를 고정하고 대신 환경의 worker_id를 증가했습니다.
+Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으로 `base_port + worker_id` 포트에 연결합니다. 따라서, 발견했던 문제를 해결하기 위해 기본 포트를 고정하고 대신 환경의 worker_id를 증가했습니다.
 
 ```python
     # Ml-Agents 내부적인 기본 포트를 마추기
