@@ -6,8 +6,8 @@ categories: [open_source, reinforcement_learning]
 image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg
 ---
 
-[마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning)* 문제를 강화학습을 이용하여 풀고 있습니다.
-(**경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*)
+[마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning) 문제를 강화학습을 이용하여 풀고 있습니다.
+(*경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*)
 여러 시행착오를 거치며 학습하는 강화학습 모델의 특성 때문에, 시간, 안전, 비용의 문제가 발생할 수 있는 실제 로봇을 사용하는 대신 시뮬레이터를 이용하여 모델을 학습시키고 있습니다.
 이때 강화학습에 적용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 라이브러리를 사용했습니다.
 
@@ -195,7 +195,7 @@ class TestUnity3DEnv(unittest.TestCase):
 PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통해 변경사항에 대해 질의를 주고받거나 필요시 추가적인 작업을 수행하기도 합니다.
 이 프로세스를 통해 새로운 변경 사항이 프로젝트의 지침을 잘 준수하는지 확인할 수 있기 때문에 유지관리자와의 소통과정은 오픈소스 컨트리뷰션에서 가장 중요한 부분 중 하나입니다.
 
-다음과 같이 담당자의 추가적인 요청을 처리한 후, 해당 [PR](https://github.com/ray-project/ray/pull/13519)은 머지되어 Ray 1.3 버전부터 포함되었습니다.
+다음과 같이 담당자가 추가적으로 Continuous Integration (CI) 스크립트 및 라이브러리 requirements을 갱신해달라는 요청했습니다. 요청들을  처리한 후, 해당 [PR](https://github.com/ray-project/ray/pull/13519)은 머지되어 Ray 1.3 버전부터 포함되었습니다.
 
 <figure class="image" style="align: center;">
 <p align="center">
