@@ -195,7 +195,7 @@ class TestUnity3DEnv(unittest.TestCase):
 PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통해 변경사항에 대해 질의를 주고받거나 필요시 추가적인 작업을 수행하기도 합니다.
 이 프로세스를 통해 새로운 변경 사항이 프로젝트의 지침을 잘 준수하는지 확인할 수 있기 때문에 유지관리자와의 소통과정은 오픈소스 컨트리뷰션에서 가장 중요한 부분 중 하나입니다.
 
-다음과 같이 담당자가 추가적으로 Continuous Integration (CI) 스크립트 및 라이브러리 requirements을 갱신해달라는 요청했습니다. 요청들을  처리한 후, 해당 [PR](https://github.com/ray-project/ray/pull/13519)은 머지되어 Ray 1.3 버전부터 포함되었습니다.
+다음과 같이 담당자가 추가적으로 Continuous Integration (CI) 스크립트 및 라이브러리 requirements을 갱신해달라는 요청을 했습니다. 요청들을  처리한 후, 해당 [PR](https://github.com/ray-project/ray/pull/13519)은 머지되어 Ray 1.3 버전부터 포함되었습니다.
 
 <figure class="image" style="align: center;">
 <p align="center">
