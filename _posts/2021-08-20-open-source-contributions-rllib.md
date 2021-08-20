@@ -3,7 +3,7 @@ layout: post
 title: 오픈소스(RLlib) 문제 발견부터 컨트리뷰션 까지
 author: yuri rocha
 categories: [open_source, reinforcement_learning]
-image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg
+image: assets/images/2021-08-20-open-source-contributions-rllib/OLP_example_image.jpg
 ---
 
 [마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning) 문제를 강화학습을 이용하여 풀고 있습니다.
@@ -15,7 +15,7 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_imag
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg" alt="OLP" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/OLP_example_image.jpg" alt="OLP" width="80%">
   <figcaption style="text-align: center;">[그림1] Multi-Robot Arm 실제 환경</figcaption>
 </p>
 </figure>
@@ -85,7 +85,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/before_pr.gif" alt="before PR" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/before_pr.gif" alt="before PR" width="80%">
   <figcaption style="text-align: center;">[그림2] 문제상황: 지정한 4개의 환경 중 첫 번째로 실행되는 환경만 정상동작</figcaption>
 </p>
 </figure>
@@ -131,7 +131,7 @@ Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/after_pr.gif" alt="after PR" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/after_pr.gif" alt="after PR" width="80%">
   <figcaption style="text-align: center;">[그림3] 문제 해결 후 지정한 모든 환경이 정상동작</figcaption>
 </p>
 </figure>
@@ -200,7 +200,7 @@ PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통�
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/communication.png" alt="after PR" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/communication.png" alt="after PR" width="80%">
   <figcaption style="text-align: center;">[그림4] 담당자의 요청 처리하는 과정</figcaption>
 </p>
 </figure>
