@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Open Source Contributions - RLlib
+title: 오픈소스(RLlib) 문제 발견부터 컨트리뷰션 까지
 author: yuri rocha
 categories: [open_source, reinforcement_learning]
 image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg
@@ -212,3 +212,5 @@ PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통�
 오픈소스의 장점은 자유로운 기여를 통해 누구나 커뮤니티에 더 나은 도구를 제공할 수 있다는 것입니다.
 
 ***That is the beauty of contributing to Open-Source***
+
+*A Special Thanks to [Jinwoo Park](https://github.com/Curt-Park) for helping with this post.*
