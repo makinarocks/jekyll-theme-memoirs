@@ -3,7 +3,7 @@ layout: post
 title: Open Source Contributions - RLlib
 author: yuri rocha
 categories: [open_source, reinforcement_learning]
-image: assets/images/2021-08-10-open-source-contributions-rllib/balance.png
+image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg
 ---
 
 [마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning)* 문제를 강화학습을 이용하여 풀고 있습니다.
