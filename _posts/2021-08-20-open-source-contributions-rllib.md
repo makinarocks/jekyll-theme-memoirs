@@ -95,7 +95,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으로 `base_port + worker_id` 포트에 연결합니다. 따라서, 발견했던 문제를 해결하기 위해 기본 포트를 고정하고 대신 환경의 worker_id를 증가했습니다.
 
 ```python
-    # Ml-Agents 내부적인 기본 포트를 마추기
+    # Ml-Agents 내부적인 기본 포트를 맞추기
     _BASE_PORT_EDITOR = 5004 
     _BASE_PORT_ENVIRONMENT = 5005
     _WORKER_ID = 0
