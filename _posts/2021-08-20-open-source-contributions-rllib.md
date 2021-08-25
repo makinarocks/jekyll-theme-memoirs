@@ -1,21 +1,21 @@
 ---
 layout: post
-title: 오픈소스(RLlib) 문제 발견부터 컨트리뷰션 까지
+title: 오픈소스(RLlib) 문제 발견부터 컨트리뷰션까지
 author: yuri rocha
 categories: [open_source, reinforcement_learning]
-image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg
+image: assets/images/2021-08-20-open-source-contributions-rllib/OLP_example_image.jpg
 ---
 
 [마키나락스](http://www.makinarocks.ai/)의 OLP(Off-line Programming) 팀에서는 제조 공장에서 사용되는 Multi-Robot Arm의 경로계획(Path Planning) 문제를 강화학습을 이용하여 풀고 있습니다.
-(*경로계획이란 다수의 로봇팔들이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.*)
-여러 시행착오를 거치며 학습하는 강화학습 모델의 특성 때문에, 시간, 안전, 비용의 문제가 발생할 수 있는 실제 로봇을 사용하는 대신 시뮬레이터를 이용하여 모델을 학습시키고 있습니다.
-이때 강화학습에 적용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 소프트웨어(오픈소스)를 사용하게 되었습니다.
+경로계획은 다수의 로봇팔이 효과적으로 동작할 수 있는 경로를 생산하는 문제입니다.
+실제 로봇 이용 시 시행 착오를 거치며 학습하는 강화학습 모델의 특성으로 인해 시간과 안전, 비용상의 문제가 발생할 수 있어, 시뮬레이터를 이용해 모델을 학습시키고 있습니다.
+이때 강화학습에 적용할 수 있는 시뮬레이터를 만드는 과정에서 몇 가지 오픈소스 소프트웨어(이하 오픈소스)를 사용하게 되었습니다.
 
 본 포스팅에서는 오픈소스([RLlib](https://docs.ray.io/en/latest/rllib.html))를 사용하며 발견한 문제의 원인 분석부터 컨트리뷰션을 통한 문제해결까지의 과정을 공유드리려고 합니다.
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_image.jpg" alt="OLP" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/OLP_example_image.jpg" alt="OLP" width="80%">
   <figcaption style="text-align: center;">[그림1] Multi-Robot Arm 실제 환경</figcaption>
 </p>
 </figure>
@@ -33,7 +33,7 @@ image: assets/images/2021-08-10-open-source-contributions-rllib/OLP_example_imag
 
 
 [ML-Agents](https://github.com/Unity-Technologies/ml-agents)는 Unity3D 게임 엔진을 기반으로 작성된 시뮬레이터로서, 지능형 에이전트의 학습 환경으로 사용되는 오픈소스입니다.
-([지난 블로그 포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서는 OLP 프로젝트를 위해 정의한 Unity3D 환경에 대해 소개해 드린 적이 있습니다.)
+[지난 블로그 포스팅](https://makinarocks.github.io/Building-a-Reinforcement-Learning-Environment/)에서는 OLP 프로젝트를 위해 정의한 Unity3D 환경에 대해 소개해 드린 적이 있습니다.
 
 ## Ray RLlib
 
@@ -85,7 +85,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/before_pr.gif" alt="before PR" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/before_pr.gif" alt="before PR" width="80%">
   <figcaption style="text-align: center;">[그림2] 문제상황: 지정한 4개의 환경 중 첫 번째로 실행되는 환경만 정상동작</figcaption>
 </p>
 </figure>
@@ -95,7 +95,7 @@ ML-Agents에서는 각 환경에서 사용할 포트를 선택할 수 있도록 
 Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으로 `base_port + worker_id` 포트에 연결합니다. 따라서, 발견했던 문제를 해결하기 위해 기본 포트를 고정하고 대신 환경의 worker_id를 증가했습니다.
 
 ```python
-    # Ml-Agents 내부적인 기본 포트를 마추기
+    # Ml-Agents 내부적인 기본 포트를 맞추기
     _BASE_PORT_EDITOR = 5004 
     _BASE_PORT_ENVIRONMENT = 5005
     _WORKER_ID = 0
@@ -131,7 +131,7 @@ Ml-Agents 환경은 base_port 외에 worker_id도 받을 수 있고 내부적으
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/after_pr.gif" alt="after PR" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/after_pr.gif" alt="after PR" width="80%">
   <figcaption style="text-align: center;">[그림3] 문제 해결 후 지정한 모든 환경이 정상동작</figcaption>
 </p>
 </figure>
@@ -200,7 +200,7 @@ PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통�
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-10-open-source-contributions-rllib/communication.png" alt="after PR" width="80%">
+  <img src="/assets/images/2021-08-20-open-source-contributions-rllib/communication.png" alt="after PR" width="80%">
   <figcaption style="text-align: center;">[그림4] 담당자의 요청 처리하는 과정</figcaption>
 </p>
 </figure>
@@ -210,6 +210,7 @@ PR을 제출하면 유지관리자와의 커뮤니케이션 프로세스를 통�
 오픈소스를 사용하다 보면 언제든지 문제상황에 봉착할 수 있습니다.
 그리고 이때 누구나 문제에 대한 해결책을 제안할 수 있습니다.
 오픈소스의 장점은 자유로운 기여를 통해 누구나 커뮤니티에 더 나은 도구를 제공할 수 있다는 것입니다.
+이번에 RLlib를 활용하며 문제에 대한 해결책을 제안해보며 개인적으로 ML-Agents 및 RLlib 내부 동작에 대해 접근하는 시야가 넓어졌음을 느낄 수 있었습니다.
 
 ***That is the beauty of contributing to Open-Source***
 
