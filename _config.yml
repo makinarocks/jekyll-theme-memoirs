@@ -85,6 +85,14 @@ authors:
     email: 'minjoo.lee@makinarocks.ai'
     web: 'https://github.com/LEEMINJOO'
 
+  dongmin lee:
+    name: dongmin lee
+    display_name: Dongmin Lee
+    avatar: 'assets/images/team/dongminlee.jpeg'
+    gravatar: 
+    email: 'dongmin.lee@makinarocks.ai'
+    web: 'https://github.com/dongminlee94'
+
 # Plugins
 plugins:
   - jekyll-paginate
