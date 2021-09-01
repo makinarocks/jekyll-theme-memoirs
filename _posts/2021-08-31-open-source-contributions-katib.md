@@ -45,9 +45,14 @@ katib 는 Hpo 한 세트를 `Experiment` 라는 [custom resource](https://kubern
 따라서 kubernetes 의 다른 custom resource 관리 방식과 동일하게 사용자가 `Experiment` 를 생성하기 위해서는 다음과 같은 형태의 yaml file 혹은 json 을 만들어 kubernetes api server 로 생성 요청을 보내야 합니다.
 하지만, katib 에서 내부적으로 정해놓은 rule 을 지키지 않은 형태로 `Experiment` 생성 요청을 수행할 경우, 실제로는 `Experiment` 가 정상적으로 생성되지 않았음에도 불구하고 사용자가 보기에는 해당 `Experiment` 의 상태가 `Running` 혹은 `Creating` 으로 보여 **제대로 동작하는 것으로 착각**하게 되는 문제가 자주 발생하였습니다.
 
-예를 들면, `Experiment` 의 이름을 정해진 rule 에 어긋나게 생성한 [경우](https://github.com/kubeflow/katib/issues/1538), `Experiment` 의 `suggestion algorithm` 관련 필드를 잘못 입력한 [경우](https://github.com/kubeflow/katib/issues/1126), `Experiment` 의 `primary-container` 필드를 잘못 입력한 [경우](https://github.com/kubeflow/katib/issues/1542), `Experiment` 생성 시 `sidecar.istio.io/inject: "true"` 를 명시하지 않은 [경우](https://github.com/kubeflow/katib/issues/1412) 와 같은 문제들이 존재하고 있었습니다.
+그 중 저희가 자주 겪었던 예를 들면 다음과 같습니다. <br>
+- 1) `Experiment` 의 이름을 정해진 rule 에 어긋나게 생성한 [경우](https://github.com/kubeflow/katib/issues/1538)
+- 2) `Experiment` 의 `suggestion algorithm` 관련 필드를 잘못 입력한 [경우](https://github.com/kubeflow/katib/issues/1126)
+- 3) `Experiment` 의 `primary-container` 필드를 잘못 입력한 [경우](https://github.com/kubeflow/katib/issues/1542)
+- 4) `Experiment` 생성 시 `sidecar.istio.io/inject: "true"` 를 명시하지 않은 [경우](https://github.com/kubeflow/katib/issues/1412)
 
-kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성요소들의 log 를 일일이 확인해보면서 그 원인을 파악하고 우회하거나 해결할 수 있지만, 그렇지 않은 사용자들은 사용하기 매우 어려운 상황이었습니다. 사용자의 실수에 대한 처리를 강하게 하지 않아서 생기는 즉, [Fail-fast](https://en.wikipedia.org/wiki/Fail-fast)를 고려하지 않아 생긴 문제를 다수 확인할 수 있었습니다.
+kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요소들의 log 를 일일이 확인해보면서 그 원인을 파악하고 해결할 수 있지만, 익숙하지 않은 사용자들에게는 문제를 해결하기 매우 어려운 환경이었습니다.
+사용자의 실수에 대한 처리를 강하게 하지 않아서 생기는 문제, [Fail-fast](https://en.wikipedia.org/wiki/Fail-fast)를 고려하지 않아 생긴 문제를 다수 확인할 수 있었습니다.
 
 
 # 컨트리뷰션 진행
