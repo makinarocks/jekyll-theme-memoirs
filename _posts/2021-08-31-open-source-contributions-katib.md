@@ -52,7 +52,7 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성요소
 
 # 컨트리뷰션 진행
 
-저희 마키나락스에서도 katib 을 계속 사용하다보니 비슷한 문제를 반복해서 겪게 되었고, 이러한 방식으로는 kubernetes 에 익숙하지 않은 대부분의 Data Scientist 와 ML Engineer 가 사용하기에는 어렵다는 의견이 모아지게 되었습니다.
+마키나락스에서도 katib을 사용하며 비슷한 문제들을 반복해서 겪게 되었고, 이러한 방식으로는 kubernetes 에 익숙하지 않은 Data Scientist 와 ML Engineer 가 사용하기에는 어렵다는 결론을 내리게 되었습니다.
 
 따라서 1 차적으로는 사용자가 직접 katib `Experiment` 의 yaml 을 모두 작성하는 형태가 아니라, 소수의 인터페이스만 제공한 뒤, 그에 맞는 정보를 사용자가 입력하면 katib `Experiment` 의 생성 요청을 위한 yaml 파일을 빌드해주는 **CLI tool 을 제공**하여, 안전한 사용과 더불어 katib 와 yaml 문법에 익숙하지 않은 사용자를 고려한 기능을 개발하여 사용하게 되었습니다.
 
