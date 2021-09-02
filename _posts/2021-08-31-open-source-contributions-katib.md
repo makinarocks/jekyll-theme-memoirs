@@ -7,7 +7,7 @@ image: assets/images/2021-08-31-open-source-contributions-katib/hpo-result.png
 ---
 
 [마키나락스](http://www.makinarocks.ai/)의 Platform 팀에서는 [kubeflow](https://github.com/kubeflow/kubeflow)를 기반으로 하여 ML/DL 모델의 실험과 배포의 간극을 줄이는 MLOps 플랫폼을 개발하고 있습니다.
-kubeflow 는 ML Workflow 를 kubernetes-native 하게 실행하고 관리할 수 있는 플랫폼이지만, 아직 v1.0 이 released 된 지 약 1 년 반 정도밖에 지나지 않은 프로젝트이기에 kubernetes 에 익숙하지 않은 Data Scientist, ML Engineer 가 사용하기에는 부족한 점이 다수 존재합니다.
+kubeflow 는 ML Workflow 를 kubernetes-native 하게 실행하고 관리할 수 있는 플랫폼이지만, 아직 v1.0 이 released 된 지 약 1년 반 정도밖에 지나지 않은 프로젝트이기에 kubernetes 에 익숙하지 않은 Data Scientist, ML Engineer 가 사용하기에는 부족한 점이 다수 존재합니다.
 
 따라서 저희 Platform 팀에서는 kubeflow 의 여러 구성요소들을 활용하되, 특정 기능은 우회해서 사용하고, 또 특정 기능은 자체적으로 구현하여 적절히 커스터마이징하여 사용하고 있습니다. 또한 그중 kubeflow 프로젝트에 보편적으로 반영할만한 기능들은 PR 을 직접 날려 컨트리뷰션을 진행하고 있습니다.
 
