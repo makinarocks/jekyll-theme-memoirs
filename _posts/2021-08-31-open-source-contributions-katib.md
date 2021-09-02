@@ -66,7 +66,7 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 이렇게 머지된 두 가지 PR 에 대한 내용을 소개하겠습니다.
 
 
-### Experiment naming
+### Experiment Naming
 
 [첫 번째](https://github.com/kubeflow/katib/pull/1541)로는 `Experiment` 의 naming convention 이 정해져 있었지만, 이를 체크하는 로직이 너무 뒤에 있어서 사용자의 입장에서는 생성 요청한 experiment 가 `CREATED` 으로 영원히 멈춰있는 이슈였습니다.
 
