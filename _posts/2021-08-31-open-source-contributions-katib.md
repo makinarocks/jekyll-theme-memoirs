@@ -26,7 +26,7 @@ kubeflow 는 ML Workflow 를 kubernetes-native 하게 실행하고 관리할 수
 
 마키나락스에서는 kubeflow 와 katib 를 통합하여, 각 팀원의 로컬 머신 내에서 프로세스 단위의 parallelized hyperparmeter optimization(이하 Hpo) 가 아닌, 약 10 개의 gpu 서버를 통합한 사내 kubernetes cluster 안에서 pod 단위의 parallelized Hpo 을 수행하고 있습니다.
 
-Hpo 의 성능을 끌어올리는 가장 흔한 방법으로는 large scale 의 hyperparameter search space 에 대해 많은 양의 컴퓨팅을 수행하는 방법을 사용하기에, 고스펙의 서버와 많은 시간을 필요로 합니다.
+Hpo 의 성능을 끌어올리는 가장 흔한 방법으로는 대규모의 hyperparameter search space에 대해 많은 양의 컴퓨팅을 수행하는 방법을 사용하기에, 고스펙의 서버와 많은 시간을 필요로 합니다.
 따라서 흔히 사용하는 Hpo package 인 [Scikit-Optimize](https://scikit-optimize.github.io/stable/user_guide.html), [Hyperopt](https://github.com/hyperopt/hyperopt), [Optuna](https://optuna.readthedocs.io/en/stable/)를 로컬 머신의 제한된 스펙 내에서 수행하는 경우 상당한 시간 소모가 불가피합니다. 하지만 kubernetes 와 같은 container orchestration system 을 활용해 node 단위의 병렬 작업과 리소스 관리 최적화 및 스케줄링을 자동화한다면 훨씬 효율적인 실험을 수행할 수 있습니다.
 
 물론 Optuna 와 Ray-tune 을 비롯한 Hpo package 들에서도, 다수의 서버를 cluster 로 구성하거나, 혹은 기존 kubernetes cluster 에서 worker 를 나누어 병렬 작업을 수행할 수 있는 기능을 지원하고 있습니다. 하지만 이들은 처음부터 kubernetes native 하게 설계되지 않은 프로젝트이기 때문에 kubernetes cluster에서 사용하기에는 다소 활용도가 떨어지는 부분이 존재합니다.
