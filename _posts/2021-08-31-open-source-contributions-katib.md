@@ -82,7 +82,7 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-31-open-source-contributions-katib/1-code.png" alt="" width="90%">
-  <figcaption style="text-align: center;">[그림 2] Changes in PR</figcaption>
+  <figcaption style="text-align: center;">[그림 2] PR의 주요 변경사항</figcaption>
 </p>
 </figure>
 
