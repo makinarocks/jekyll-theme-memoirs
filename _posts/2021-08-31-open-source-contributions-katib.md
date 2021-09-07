@@ -16,7 +16,7 @@ kubeflow 는 ML Workflow 를 kubernetes-native 하게 실행하고 관리할 수
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-31-open-source-contributions-katib/hpo-result.png" alt="" width="100%">
-  <figcaption style="text-align: center;">[그림 1] Sample HPO Result</figcaption>
+  <figcaption style="text-align: center;">[그림 1] Simple HPO with katib</figcaption>
 </p>
 </figure>
 
@@ -96,7 +96,7 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-31-open-source-contributions-katib/katib-hp-search-issue-comment.png" alt="" width="80%">
-  <figcaption style="text-align: center;">[그림 3] Issue Comments</figcaption>
+  <figcaption style="text-align: center;">[그림 3] Maintainer's guidance from issue comments</figcaption>
 </p>
 </figure>
 
@@ -106,14 +106,17 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-31-open-source-contributions-katib/skopt-validation-수정.png" alt="" width="90%">
-  <figcaption style="text-align: center;">[그림 4] Validation parts</figcaption>
+  <img src="/assets/images/2021-08-31-open-source-contributions-katib/validation-1.png" alt="" width="100%">
+</p>
+<p align="center">
+  <img src="/assets/images/2021-08-31-open-source-contributions-katib/validation-2.png" alt="" width="100%">
+  <figcaption style="text-align: center;">[그림 4] Added validation code</figcaption>
 </p>
 </figure>
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-31-open-source-contributions-katib/skopt-test-code.png" alt="" width="80%">
+  <img src="/assets/images/2021-08-31-open-source-contributions-katib/skopt-test-code.png" alt="" width="85%">
   <figcaption style="text-align: center;">[그림 5] Test code for each test case</figcaption>
 </p>
 </figure>
@@ -122,8 +125,8 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-31-open-source-contributions-katib/2-review-comments.png" alt="" width="80%">
-  <figcaption style="text-align: center;">[그림 6] Review Comments</figcaption>
+  <img src="/assets/images/2021-08-31-open-source-contributions-katib/2-review-comments.png" alt="" width="85%">
+  <figcaption style="text-align: center;">[그림 6] Maintainer's guidance from review comments</figcaption>
 </p>
 </figure>
 
