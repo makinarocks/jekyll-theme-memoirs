@@ -45,7 +45,7 @@ kubernetes 에 익숙하신 독자분들이라면 kubernetes 에서는 CRI, CNI,
 
 katib 는 Hpo 한 세트를 `Experiment` 라는 [custom resource](https://kubernetes.io/ko/docs/concepts/extend-kubernetes/api-extension/custom-resources/) 로 정의하고 관리하고 있습니다. <br>
 따라서 kubernetes 의 다른 custom resource 관리 방식과 동일하게 사용자가 `Experiment` 를 생성하기 위해서는 다음과 같은 형태의 yaml file 혹은 json 을 만들어 kubernetes api server 로 생성 요청을 보내야 합니다.
-하지만, katib 에서 내부적으로 정해놓은 rule 을 지키지 않은 형태로 `Experiment` 생성 요청을 수행할 경우, 실제로는 `Experiment` 가 정상적으로 생성되지 않았음에도 불구하고 사용자가 보기에는 해당 `Experiment` 의 상태가 `Running` 혹은 `Creating` 으로 보여 **제대로 동작하는 것으로 착각**하게 되는 문제가 자주 발생하였습니다.
+하지만, katib 에서 내부적으로 정해놓은 규칙을 지키지 않은 형태로 `Experiment` 생성 요청을 수행할 경우, 실제로는 `Experiment` 가 정상적으로 생성되지 않았음에도 불구하고 사용자가 보기에는 해당 `Experiment` 의 상태가 `Running` 혹은 `Creating` 으로 보여 **제대로 동작하는 것으로 착각**하게 되는 문제가 자주 발생하였습니다.
 
 그 중 저희가 자주 겪었던 문제 상황의 예를 들면 다음과 같습니다. <br>
 - 1) `Experiment` 의 이름을 정해진 rule 에 어긋나게 생성한 [경우](https://github.com/kubeflow/katib/issues/1538)
