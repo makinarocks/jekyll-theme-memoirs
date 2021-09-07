@@ -149,11 +149,11 @@ Kubernetes, Kubeflow 그리고 Katib에 익숙한 사용자라면 katib-controll
 
 이후 Katib Maintainer로부터 해당 이슈는 버그가 맞고, Fail-Fast를 위해서 `ValidatingAdmissionWebhook`에서 확인하는 것이 좋겠다고 동의해 주었습니다.
 
-이후에 제가 직접 구현하고 싶다는 의사를 전달하여 구현을 시작하였고, 아래와 같이 간단한 정규 표현식을 사용해 naming convention을 검증하는 코드와 테스트 코드를 추가한 [PR](https://github.com/kubeflow/katib/pull/1541)을 생성하여 Maintainer의 리뷰를 거쳐 머지되었습니다.
+이후에 제가 직접 구현하고 싶다는 의사를 전달하여 구현을 시작하였고, 아래와 같이 간단한 정규 표현식을 사용해 naming convention을 검증하는 코드와 유닛 테스트를 추가한 [PR](https://github.com/kubeflow/katib/pull/1541)을 생성하여 Maintainer의 리뷰를 거쳐 머지되었습니다.
 
 ```go
 func (g *DefaultValidator) ValidateExperiment(instance, oldInst *experimentsv1beta1.Experiment) error {
-  // 내부적으로 정해둔 naming convention 의 정규표현식
+  // 내부적으로 정해둔 naming convention의 정규표현식
 	namingConvention, _ := regexp.Compile("^[a-z]([-a-z0-9]*[a-z0-9])?")
 
 	if !namingConvention.MatchString(instance.Name) {  // 검증 및 에러 처리
@@ -178,13 +178,15 @@ func (g *DefaultValidator) ValidateExperiment(instance, oldInst *experimentsv1be
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-31-open-source-contributions-katib/katib-hp-search-issue-comment.png" alt="" width="80%">
-  <figcaption style="text-align: center;">[그림 3] Maintainer's guidance from issue comments</figcaption>
+  <figcaption style="text-align: center;">[그림 2] Maintainer's guidance from issue comments</figcaption>
 </p>
 </figure>
 
 요약하면 Katib에서 제공하는 hyperparameter search algorithm 중 Hyperopt는 [다음](https://github.com/kubeflow/katib/blob/3fadef637ad17458f629a4baeba7fd38205a1510/pkg/suggestion/v1beta1/hyperopt/service.py#L57)과 같이 algorithm 의 validation 과정을 제공하고 있었지만, Scikit-Optimize (이하 skopt)를 비롯한 일부 algorithm은 validation 과정을 제공하고 있지 않는다는 문제였습니다.
 
-따라서 이를 해결하기 위해 우선 skopt의 optimizer 관련 [공식 API 문서](https://scikit-optimize.github.io/stable/modules/generated/skopt.Optimizer.html)를 보며 skopt에서 필요한 validation이 무엇인지 확인하였습니다. 이후 해당 validation을 수행하는 로직을 추가하고, 각각의 경우에 대한 테스트 케이스를 검증하는 test code를 추가한 [PR](https://github.com/kubeflow/katib/pull/1600)을 작성하였습니다.
+따라서 이를 해결하기 위해 우선 skopt의 optimizer 관련 [공식 API 문서](https://scikit-optimize.github.io/stable/modules/generated/skopt.Optimizer.html)를 보며 skopt에서 필요한 validation이 무엇인지 확인하였습니다. 이후 해당 validation을 수행하는 로직을 추가하고, 가능한 테스트 케이스를 모두 검증하는 유닛 테스트를 추가한 [PR](https://github.com/kubeflow/katib/pull/1600)을 작성하였습니다.
+
+- 메인 로직
 
 ```python
 class SkoptService(api_pb2_grpc.SuggestionServicer, HealthServicer):
@@ -216,7 +218,7 @@ class OptimizerConfiguration(object):
   def _validate_bayesianoptimization_setting(cls, algorithm_settings):
       for s in algorithm_settings:
           try:
-              # 사용자가 요청한 algorithm_settings 이 유효한지 각각의 attribute 에 대해 검증합니다.
+              # 사용자가 요청한 algorithm_settings이 유효한지 각각의 attribute에 대해 검증합니다.
               if s.name == "base_estimator":
                   if s.value not in ["GP", "RF", "ET", "GBRT"]:
                       return False, "base_estimator {} is not supported in Bayesian optimization".format(s.value)
@@ -233,24 +235,67 @@ class OptimizerConfiguration(object):
       return True, ""  
 ```
 
+- 유닛 테스트 코드
+
+```python
+    def test_validate_algorithm_settings(self):
+        # 중간 생략
+
+        # 각각의 attribute에 대해 invalid한 케이스를 모두 검증합니다.
+        # invalid cases
+        # unknown algorithm name
+        experiment_spec[0] = api_pb2.ExperimentSpec(
+            algorithm=api_pb2.AlgorithmSpec(algorithm_name="unknown"))
+        _, _, code, details = call_validate()
+        self.assertEqual(code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(details, 'unknown algorithm name unknown')
+
+        # unknown config name
+        experiment_spec[0] = api_pb2.ExperimentSpec(
+            algorithm=api_pb2.AlgorithmSpec(
+                algorithm_name="bayesianoptimization",
+                algorithm_settings=[
+                    api_pb2.AlgorithmSetting(name="unknown_conf", value="1111")]
+            ))
+        _, _, code, details = call_validate()
+        self.assertEqual(code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(details, 'unknown setting unknown_conf for algorithm bayesianoptimization')
+
+        # unknown base_estimator
+        experiment_spec[0] = api_pb2.ExperimentSpec(
+            algorithm=api_pb2.AlgorithmSpec(
+                algorithm_name="bayesianoptimization",
+                algorithm_settings=[
+                    api_pb2.AlgorithmSetting(name="base_estimator", value="unknown estimator")]
+            ))
+        _, _, code, details = call_validate()
+        wrong_algorithm_setting = experiment_spec[0].algorithm.algorithm_settings[0]
+        self.assertEqual(code, grpc.StatusCode.INVALID_ARGUMENT)
+        self.assertEqual(details,
+                         "{name} {value} is not supported in Bayesian optimization".format(
+                             name=wrong_algorithm_setting.name,
+                             value=wrong_algorithm_setting.value))
+        # 이하 생략
+```
+
 이후 다음과 같이 Maintainer로부터 Katib 내의 convention 통일, 에러 메시지를 명시적으로 수정하는 등의 리뷰를 거쳐 머지되었습니다.
 
 <figure class="image" style="align: center;">
 <p align="center">
-  <img src="/assets/images/2021-08-31-open-source-contributions-katib/2-review-comments.png" alt="" width="85%">
-  <figcaption style="text-align: center;">[그림 6] Maintainer's guidance from review comments</figcaption>
+  <img src="/assets/images/2021-08-31-open-source-contributions-katib/2-review-comments.png" alt="" width="80%">
+  <figcaption style="text-align: center;">[그림 3] Maintainer's guidance from review comments</figcaption>
 </p>
 </figure>
 
 
 # 맺음말
 
-위에서 다룬 PR 외에도 마키나락스에서 Kubeflow/Katib를 비롯해 [Kubeflow/kubeflow](https://github.com/kubeflow/kubeflow), [Kubeflow/pipeline](https://github.com/kubeflow/pipelines) 등 Kubeflow 관련 프로젝트들을 활용하며 만났던 이슈들과 그 해결책들을 지속적으로 제시하다 보니, 기존 Kubeflow member 의 추천을 받아 Kubeflow organization 의 member 로 [합류](https://github.com/kubeflow/internal-acls/pull/487)하게 되었습니다. 
+위에서 다룬 PR 외에도 마키나락스에서 Kubeflow/Katib를 비롯해 [Kubeflow/kubeflow](https://github.com/kubeflow/kubeflow), [Kubeflow/pipeline](https://github.com/kubeflow/pipelines) 등 Kubeflow 관련 프로젝트들을 활용하며 만났던 이슈들과 그 해결책들을 지속적으로 제시하다 보니, 기존 Kubeflow member의 추천을 받아 Kubeflow organization의 member로 [합류](https://github.com/kubeflow/internal-acls/pull/487)하게 되었습니다. 
 
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-31-open-source-contributions-katib/join-kubeflow.png" alt="" width="100%">
-  <figcaption style="text-align: center;">[그림 7] Joined Kubeflow Organization</figcaption>
+  <figcaption style="text-align: center;">[그림 4] Joined Kubeflow Organization</figcaption>
 </p>
 </figure>
 
