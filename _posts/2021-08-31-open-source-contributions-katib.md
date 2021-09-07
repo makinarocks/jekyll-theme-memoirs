@@ -89,7 +89,7 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 
 ### Hyperparameter Search Algorithm Setting
 
-[두 번째](https://github.com/kubeflow/katib/pull/1600)로는 `Experiment` 에서 Hyperparameter Search Algorithm 을 선택할 때, 해당 algorithm 의 세팅을 잘못 입력한 경우에 대한 Validation 로직이 없는 algorithm 으로 생성 요청한 경우, experiment 가 `RUNNING` 으로 영원히 멈춰있는 이슈였습니다. katib 에서는 해당 [issue](https://github.com/kubeflow/katib/issues/1126) 를 이미 파악하고 있었지만, 약 1 년째 진행되지 않고 open & frozen 상태로 남아있는 상황이었습니다.
+[두 번째](https://github.com/kubeflow/katib/pull/1600)로는 `Experiment` 에서 Hyperparameter Search Algorithm 을 선택할 때, Validation 로직이 없는 algorithm에 잘못된 세팅값을 설정한 경우, experiment 가 `RUNNING` 으로 영원히 멈춰있는 이슈였습니다. katib 에서는 해당 [issue](https://github.com/kubeflow/katib/issues/1126) 를 이미 파악하고 있었지만, 약 1 년째 진행되지 않고 open & frozen 상태로 남아있는 상황이었습니다.
 
 마키나락스에서도 bayesian optimization algorithm 으로 hyperparameter search 를 수행하는 실험을 진행하던 중 동일한 문제 상황을 겪었기에, 프로젝트에 직접 기여하기로 결정하였습니다.
 
