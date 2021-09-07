@@ -74,7 +74,9 @@ kubernetes 와 kubeflow, katib 에 익숙한 사용자라면 여러 구성 요�
 
 우선 정확한 로그를 첨부한 [issue](https://github.com/kubeflow/katib/issues/1538) 를 생성하여, 해당 상황이 발생하지 않도록 kubernetes 의 [ValidatingAdmissionWebhook](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#validatingadmissionwebhook) 에서 block 처리를 하거나, 혹은 최소한 해당 상황이 발생하면 `Experiment` 의 status 를 `FAILED` 로 변경하도록 수정하는 것이 어떻겠냐는 구현 방향을 함께 전달하였습니다.
 
-이후 katib Maintainer 로부터 해당 이슈는 버그가 맞고, Fail-Fast 를 위해서 `ValidatingAdmissionWebhook` 에서 check 하는 것이 좋겠다고 동의해 주었습니다. <br>
+이후 katib Maintainer 로부터 해당 이슈는 버그가 맞고, Fail-Fast 를 위해서 `ValidatingAdmissionWebhook` 에서 확인하는 것이 좋겠다고 동의해 주었습니다.
+
+
 이후에 제가 직접 구현하고 싶다는 의사를 전달하여 구현을 시작하였고, 아래와 같이 간단한 정규 표현식을 사용해 naming convention 을 검증하는 코드와 테스트 코드를 추가한 PR 을 생성하여 Maintainer 의 review 를 거쳐 머지되었습니다.
 
 <figure class="image" style="align: center;">
