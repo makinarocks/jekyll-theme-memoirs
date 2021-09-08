@@ -85,6 +85,14 @@ authors:
     email: 'minjoo.lee@makinarocks.ai'
     web: 'https://github.com/LEEMINJOO'
 
+  jaeyeon kim:
+    name: jaeyeon kim
+    display_name: Jaeyeon Kim
+    avatar: 'assets/images/team/jaeyeonkim.png'
+    gravatar: 
+    email: 'jaeyeon.kim@makinarocks.ai'
+    web: 'https://github.com/anencore94'
+
 # Plugins
 plugins:
   - jekyll-paginate
