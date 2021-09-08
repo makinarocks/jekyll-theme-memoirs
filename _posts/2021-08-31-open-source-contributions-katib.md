@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 마키나락스에서의 Kubeflow-Katib 의 활용과 컨트리뷰션 공유
+title: Kubeflow/Katib의 안전한 사용과 커뮤니티를 위해 기여하기
 author: jaeyeon kim
 categories: [open_source, kubeflow]
 image: assets/images/2021-08-31-open-source-contributions-katib/hpo-result.png
@@ -16,7 +16,7 @@ Kubeflow는 ML Workflow 를 Kubernetes-native하게 실행하고 관리할 수 �
 <figure class="image" style="align: center;">
 <p align="center">
   <img src="/assets/images/2021-08-31-open-source-contributions-katib/hpo-result.png" alt="" width="100%">
-  <figcaption style="text-align: center;">[그림 1] Simple HPO with Katib</figcaption>
+  <figcaption style="text-align: center;">[그림 1] HPO Result with Katib</figcaption>
 </p>
 </figure>
 
@@ -31,7 +31,7 @@ HPO의 성능을 끌어올리는 가장 흔한 방법으로는 대규모의 hype
 
 물론 Optuna와 Ray-tune을 비롯한 HPO package들에서도, 다수의 서버를 cluster로 구성하거나, 혹은 기존 Kubernetes cluster에서 worker를 나누어 병렬 작업을 수행할 수 있는 기능을 지원하고 있습니다. 하지만 이들은 처음부터 Kubernetes native하게 설계되지 않은 프로젝트이기 때문에 Kubernetes cluster에서 사용하기에는 다소 활용도가 떨어지는 부분이 있습니다.
 
-예를 들어 Optuna를 Kubernetes에서 사용하기 위해서는 [다음](https://github.com/optuna/optuna-examples/blob/main/kubernetes/simple/k8s-manifests.yaml)과 같은 manifests를 배포 및 관리해야 하며, HPO를 담당하는 python 소스 코드를 추가한 도커 이미지를 필요로 합니다. 따라서 실험 중간에 hyperparameter search space를 변경하고 싶은 경우, 사용자는 python 소스 코드 수정, 도커 이미지 재빌드 후 재배포, manifests 중 worker Job 재배포의 모든 과정을 항상 수행해야 합니다. 아직은 Kubernetes의 [custom resource](https://kubernetes.io/ko/docs/concepts/extend-kubernetes/api-extension/custom-resources/) 형태로 Optuna의 HPO 관련 로직을 제어할 수 있는 기능이 제공되지 않아, Kubernetes API로는 다양한 요청을 할 수 없기 때문에 발생하는 이슈입니다.
+예를 들어 Optuna를 Kubernetes에서 사용하기 위해서는 [다음](https://github.com/optuna/optuna-examples/blob/main/kubernetes/simple/k8s-manifests.yaml)과 같은 manifests를 배포 및 관리해야 하며, HPO를 담당하는 python 소스 코드를 추가한 도커 이미지를 필요로 합니다. 따라서 실험 중간에 hyperparameter search space를 변경하고 싶은 경우, 사용자는 python 소스 코드 수정, 도커 이미지 재빌드 후 재배포, manifests 중 [worker Job](https://github.com/optuna/optuna-examples/blob/f4293a925a77fe08ce04ea6abe694449fc862bf4/kubernetes/simple/k8s-manifests.yaml#L92) 재배포의 모든 과정을 항상 수행해야 합니다. 아직은 Kubernetes의 [custom resource](https://kubernetes.io/ko/docs/concepts/extend-kubernetes/api-extension/custom-resources/) 형태로 Optuna의 HPO 관련 로직을 제어할 수 있는 기능이 제공되지 않아, Kubernetes API로는 다양한 요청을 할 수 없기 때문에 발생하는 이슈입니다.
 
 Katib는 이러한 문제를 효과적으로 해결하기 위해 시작된 프로젝트입니다.
 Katib는 자체적으로 hyperparameter search algorithm을 구현하기도 하지만, 가장 큰 특징은 Scikit-Optimize, Hyperopt, Chocolate, Optuna와 같은 외부 라이브러리들의 기존 method들을 **쉽게 통합할 수 있는 인터페이스를 제공**한다는 점입니다. <br>
